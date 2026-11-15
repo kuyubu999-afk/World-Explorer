@@ -2,114 +2,112 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f6f4ef">
 <title>World Explorer</title>
 <style>
-:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#182333;background:#f3f6fa}
-body{margin:0}header{background:#163d63;color:white;padding:22px 18px}
-h1{margin:0 0 6px;font-size:25px}header p{margin:0;opacity:.85}
-main{padding:16px;max-width:850px;margin:auto}.panel{background:white;border-radius:16px;padding:16px;margin:14px 0;box-shadow:0 3px 14px #132b4410}
-input,button{font:inherit;border-radius:10px;padding:12px;border:1px solid #cbd5e1}
-input{width:100%;box-sizing:border-box;margin:8px 0}
-button{background:#1769aa;color:white;border:0;margin:4px 4px 4px 0}
-button.secondary{background:#e7eef5;color:#18344e}
-a{color:#1267a8}small,.muted{color:#64748b}.result{padding:10px;border-bottom:1px solid #e5eaf0}
-#map{width:100%;height:260px;border:0;border-radius:12px}
+:root{--ink:#17251f;--muted:#78837b;--paper:#f6f4ef;--card:#fffefa;--line:#e8e5dc;--green:#244f40;--gold:#c49b58;--shadow:0 12px 34px rgba(29,43,35,.08);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);padding-bottom:88px}button,input{font:inherit}button{cursor:pointer}
+.topbar{height:66px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;max-width:1080px;margin:auto}
+.brand{display:flex;align-items:center;gap:10px;font-family:Georgia,serif;font-size:20px;letter-spacing:.2px}.brand-mark{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--green);color:#f7f3e9;font-size:17px}
+.lang{border:1px solid var(--line);background:transparent;border-radius:30px;padding:8px 12px;color:var(--green);font-size:12px;font-weight:700}
+main{max-width:1080px;margin:auto;padding:8px 18px 28px}
+.eyebrow{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);font-weight:800}
+.hero{position:relative;min-height:390px;border-radius:25px;overflow:hidden;color:white;background:#314b42 url('https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1400&auto=format&fit=crop&q=85') center 48%/cover;box-shadow:var(--shadow)}
+.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,29,24,.78),rgba(11,29,24,.2) 75%),linear-gradient(0deg,rgba(10,24,20,.35),transparent 60%)}
+.hero-inner{position:relative;z-index:1;padding:36px 28px;max-width:620px}
+.hero .eyebrow{color:#e6c58d}.hero h1{font:500 clamp(34px,7vw,58px)/1.02 Georgia,serif;margin:16px 0 12px;letter-spacing:-1px}.hero p{font-size:14px;line-height:1.7;color:#f0eee8;max-width:390px;margin:0 0 22px}
+.search{display:flex;background:#fffefa;border-radius:13px;padding:5px;max-width:490px;box-shadow:0 10px 30px #101d1833}.search input{min-width:0;flex:1;border:0;outline:0;padding:12px 11px;background:transparent;color:var(--ink);font-size:14px}.search button{border:0;border-radius:10px;background:var(--green);color:white;padding:0 18px;font-size:13px;font-weight:700}
+.hero-note{font-size:10px!important;color:#e5e6df!important;margin-top:12px!important}
+.section-head{display:flex;align-items:end;justify-content:space-between;margin:32px 2px 15px;gap:12px}.section-head h2{font:500 25px Georgia,serif;margin:5px 0 0}.section-head span{font-size:11px;color:var(--muted)}
+.category-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.category{border:1px solid var(--line);background:var(--card);border-radius:15px;padding:16px 8px;text-align:center;color:var(--ink);box-shadow:0 3px 12px #1b2a2010}
+.category .ico{font-size:23px;display:block;margin-bottom:8px}.category b{font-size:11px;font-weight:700}
+.feature-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
+.feature{position:relative;min-height:210px;border-radius:19px;overflow:hidden;background:#52665b center/cover;display:flex;align-items:end;color:white;text-decoration:none}
+.feature:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#0e211dcc,transparent 75%)}
+.feature.large{background-image:url('https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1100&auto=format&fit=crop&q=85')}
+.feature.small{background-image:url('https://images.unsplash.com/photo-1500534623283-312aade485b7?w=900&auto=format&fit=crop&q=85')}
+.feature-copy{position:relative;z-index:1;padding:18px}.feature-copy small{font-size:10px;letter-spacing:1.5px;color:#e8d1a7;text-transform:uppercase}.feature-copy h3{font:500 25px Georgia,serif;margin:6px 0}.feature-copy p{font-size:11px;margin:0;color:#eee}
+.result-area{display:none;margin-top:14px}.result-card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:13px;margin:8px 0;display:flex;justify-content:space-between;align-items:center;gap:12px}.result-card button{border:0;background:#e8eee8;color:var(--green);padding:9px 12px;border-radius:9px;font-size:12px;font-weight:700}
+.detail{display:none;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;margin-top:18px;box-shadow:var(--shadow)}.detail h2{font:500 27px Georgia,serif;margin:6px 0}.detail p{font-size:13px;line-height:1.75;color:#59675e}.detail-actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.pill{border:1px solid var(--line);background:#f8f7f2;color:var(--green);border-radius:30px;padding:9px 12px;font-size:11px;font-weight:700}
+.map-wrap{height:240px;overflow:hidden;border-radius:14px;background:#e8e9e2;margin-top:14px}.map-wrap iframe{width:100%;height:100%;border:0}
+.link-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}.link-tile{display:block;text-decoration:none;color:var(--green);background:#f0f2eb;border-radius:11px;padding:12px;font-size:12px;font-weight:700}
+.info-strip{margin-top:28px;padding:20px;border-radius:17px;background:#e9eee7;display:flex;justify-content:space-between;align-items:center;gap:14px}.info-strip h3{font:500 20px Georgia,serif;margin:4px 0}.info-strip p{font-size:11px;line-height:1.5;color:#637067;margin:0}.info-strip .globe{font-size:36px}
+footer{text-align:center;color:#90978f;font-size:10px;padding:24px 10px}
+.bottom-nav{position:fixed;z-index:5;bottom:0;left:0;right:0;background:#fffefaed;backdrop-filter:blur(15px);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:10px 8px calc(10px + env(safe-area-inset-bottom))}
+.nav-item{border:0;background:transparent;color:#879087;font-size:10px;display:grid;gap:3px;justify-items:center;min-width:55px}.nav-item strong{font-size:19px;font-weight:500}.nav-item.active{color:var(--green);font-weight:800}
+@media(min-width:700px){main{padding-top:18px}.hero{min-height:440px}.hero-inner{padding:55px 48px}.category-row{grid-template-columns:repeat(4,1fr)}.feature{min-height:270px}.bottom-nav{max-width:560px;left:50%;transform:translateX(-50%);border:1px solid var(--line);border-bottom:0;border-radius:18px 18px 0 0}}
+@media(max-width:520px){.hero{min-height:420px}.hero-inner{padding:32px 21px}.category-row{gap:7px}.category{padding:13px 4px}.category b{font-size:10px}.feature-grid{grid-template-columns:1fr}.feature{min-height:185px}.section-head{margin-top:27px}.info-strip{padding:16px}}
 </style>
 </head>
 <body>
-<header><h1>🌍 World Explorer</h1><p id="tagline">探索世界，从一个地名开始</p></header>
+<header class="topbar">
+ <div class="brand"><span class="brand-mark">✦</span><span>WORLD EXPLORER</span></div>
+ <button class="lang" id="langBtn" onclick="toggleLang()">中文 / EN</button>
+</header>
 <main>
-<section class="panel">
-  <button class="secondary" onclick="setLang('zh')">中文</button>
-  <button class="secondary" onclick="setLang('en')">English</button>
-  <h2 id="searchTitle">搜索城市、国家或自然地理</h2>
-  <input id="place" placeholder="例如：巴黎、瑞典、尼罗河">
-  <button onclick="searchPlace()" id="searchBtn">搜索</button>
-  <div id="matches"></div>
-</section>
-<section class="panel">
-  <h2 id="overviewTitle">目的地介绍</h2>
-  <div id="overview" class="muted">搜索一个地点以查看介绍。</div>
-  <button class="secondary" onclick="speak()" id="speakBtn">🔊 朗读介绍</button>
-</section>
-<section class="panel">
-  <h2 id="mapTitle">地图</h2>
-  <div id="mapNote" class="muted">选择地点后显示地图。</div>
-  <iframe id="map" loading="lazy" title="OpenStreetMap map"></iframe>
-</section>
-<section class="panel">
-  <h2 id="nearbyTitle">周边探索</h2>
-  <div id="nearbyLinks" class="muted">搜索地点后生成周边探索入口。</div>
-</section>
-<section class="panel">
-  <h2 id="heritageTitle">世界遗产与视频</h2>
-  <div id="heritageLinks">搜索地点后可查询相关资料。</div>
-  <p class="muted">当前为基础原型；周边商家、遗产资料和视频通过外部公开页面查询，尚未接入实时预订或完整数据库。</p>
-</section>
+ <section class="hero">
+  <div class="hero-inner">
+   <div class="eyebrow" id="heroEyebrow">THE WORLD, OPENED</div>
+   <h1 id="heroTitle">世界很大，<br>值得慢慢探索。</h1>
+   <p id="heroText">从一座城市到一片山海。探索地理、文化与自然，发现每个地方独特的故事。</p>
+   <div class="search"><input id="place" placeholder="搜索城市、国家、山脉或河流"><button onclick="searchPlace()" id="searchBtn">探索 ↗</button></div>
+   <p class="hero-note" id="heroNote">试试：京都 · 冰岛 · 阿尔卑斯山 · 尼罗河</p>
+  </div>
+ </section>
+ <section class="section-head"><div><div class="eyebrow" id="catEyebrow">EXPLORE BY INTEREST</div><h2 id="catTitle">按兴趣探索</h2></div><span id="catSub">发现世界的不同侧面</span></section>
+ <section class="category-row">
+  <button class="category" onclick="quickSearch('Paris')"><span class="ico">🏛️</span><b id="c1">城市文化</b></button>
+  <button class="category" onclick="quickSearch('Alps')"><span class="ico">🏔️</span><b id="c2">山川地貌</b></button>
+  <button class="category" onclick="quickSearch('Norway fjords')"><span class="ico">🌊</span><b id="c3">自然奇观</b></button>
+  <button class="category" onclick="quickSearch('UNESCO World Heritage')"><span class="ico">🌐</span><b id="c4">世界遗产</b></button>
+ </section>
+ <div id="matches" class="result-area"></div>
+ <section class="section-head"><div><div class="eyebrow" id="inspireEyebrow">EDITOR'S SELECTION</div><h2 id="inspireTitle">灵感目的地</h2></div><span id="inspireSub">从这里开始下一段旅程</span></section>
+ <section class="feature-grid">
+  <a class="feature large" href="#" onclick="quickSearch('Cinque Terre');return false"><div class="feature-copy"><small>ITALY · COASTAL VILLAGES</small><h3>意大利五渔村</h3><p>沿着海岸，寻找色彩与时间的故事</p></div></a>
+  <a class="feature small" href="#" onclick="quickSearch('Iceland');return false"><div class="feature-copy"><small>NORDIC · WILD NATURE</small><h3>冰岛</h3><p>冰与火塑造的辽阔天地</p></div></a>
+ </section>
+ <section class="detail" id="detail">
+  <div class="eyebrow" id="detailEyebrow">DESTINATION PROFILE</div>
+  <h2 id="detailName"></h2><div id="detailSummary"></div>
+  <div class="detail-actions">
+   <button class="pill" onclick="speak()" id="speakBtn">🔊 语音讲解</button>
+   <button class="pill" onclick="savePlace()" id="saveBtn">☆ 收藏地点</button>
+  </div>
+  <div class="eyebrow" id="mapEyebrow">GEOGRAPHY</div>
+  <div class="map-wrap"><iframe id="map" title="Destination map" loading="lazy"></iframe></div>
+  <div class="link-grid" id="exploreLinks"></div>
+ </section>
+ <section class="info-strip"><div><div class="eyebrow" id="knowledgeEyebrow">BEYOND THE JOURNEY</div><h3 id="knowledgeTitle">旅行，也是理解世界的方式。</h3><p id="knowledgeText">从地形与气候，到文明与遗产。让每一次出发，都多一点发现。</p></div><div class="globe">🌍</div></section>
+ <footer>WORLD EXPLORER · DISCOVER WITH CURIOSITY</footer>
 </main>
+<nav class="bottom-nav">
+ <button class="nav-item active" onclick="scrollTopPage()"><strong>⌂</strong><span id="navHome">探索</span></button>
+ <button class="nav-item" onclick="focusSearch()"><strong>⌕</strong><span id="navSearch">搜索</span></button>
+ <button class="nav-item" onclick="showSaved()"><strong>♡</strong><span id="navSaved">收藏</span></button>
+ <button class="nav-item" onclick="showAbout()"><strong>◎</strong><span id="navAbout">关于</span></button>
+</nav>
 <script>
-let lang='zh', currentName='', currentLat=null, currentLon=null, currentSummary='';
-const words={
- zh:{tag:'探索世界，从一个地名开始',search:'搜索城市、国家或自然地理',placeholder:'例如：巴黎、瑞典、尼罗河',btn:'搜索',overview:'目的地介绍',empty:'搜索一个地点以查看介绍。',speak:'🔊 朗读介绍',map:'地图',mapNote:'选择地点后显示地图。',nearby:'周边探索',heritage:'世界遗产与视频',err:'暂时无法获取数据，请检查网络后重试。'},
- en:{tag:'Discover the world, one place at a time',search:'Search cities, countries or natural features',placeholder:'e.g. Paris, Sweden, Nile River',btn:'Search',overview:'Destination overview',empty:'Search for a place to see an introduction.',speak:'🔊 Read aloud',map:'Map',mapNote:'Choose a place to show the map.',nearby:'Explore nearby',heritage:'World heritage & videos',err:'Unable to load data. Check your connection and try again.'}
+let lang='zh',currentPlace=null,currentSummary='',saved=JSON.parse(localStorage.getItem('we_saved')||'[]');
+const T={
+ zh:{eyebrow:'THE WORLD, OPENED',title:'世界很大，<br>值得慢慢探索。',hero:'从一座城市到一片山海。探索地理、文化与自然，发现每个地方独特的故事。',placeholder:'搜索城市、国家、山脉或河流',search:'探索 ↗',note:'试试：京都 · 冰岛 · 阿尔卑斯山 · 尼罗河',cat:'按兴趣探索',catSub:'发现世界的不同侧面',c:['城市文化','山川地貌','自然奇观','世界遗产'],inspire:'灵感目的地',inspireSub:'从这里开始下一段旅程',detail:'目的地档案',speak:'🔊 语音讲解',save:'☆ 收藏地点',saved:'★ 已收藏',map:'地理位置',links:['地图探索','周边住宿','餐饮美食','世界遗产','旅游视频','交通信息'],empty:'选择一个地点，开启探索。',error:'暂时无法获取介绍，请稍后重试。',nav:['探索','搜索','收藏','关于'],knowledge:'旅行，也是理解世界的方式。',knowledgeText:'从地形与气候，到文明与遗产。让每一次出发，都多一点发现。',noSaved:'还没有收藏地点。搜索并收藏感兴趣的目的地吧。',about:'World Explorer 是一款全球地理与文化探索应用。当前版本为早期原型，部分资料通过公开数据服务获取。'},
+ en:{eyebrow:'THE WORLD, OPENED',title:'A wider world.<br>Worth exploring.',hero:'From vibrant cities to vast landscapes. Discover the geography, culture and nature behind every place.',placeholder:'Search cities, countries, mountains or rivers',search:'EXPLORE ↗',note:'Try: Kyoto · Iceland · The Alps · Nile River',cat:'Explore by interest',catSub:'Discover different sides of the world',c:['City & culture','Landforms','Natural wonders','World heritage'],inspire:'Destination inspiration',inspireSub:'Find your next journey here',detail:'Destination profile',speak:'🔊 Audio guide',save:'☆ Save place',saved:'★ Saved',map:'GEOGRAPHY',links:['Explore map','Nearby stays','Food & dining','World heritage','Travel videos','Transport'],empty:'Choose a place to start exploring.',error:'Could not load the introduction. Please try again.',nav:['Discover','Search','Saved','About'],knowledge:'Travel is a way to understand the world.',knowledgeText:'From landscapes and climate to civilizations and heritage. Let every journey reveal something new.',noSaved:'No saved places yet. Search and save destinations you like.',about:'World Explorer is a global geography and culture discovery app. This is an early prototype using selected public data services.'}
 };
-function setLang(l){
- lang=l;const w=words[l];document.documentElement.lang=l==='zh'?'zh-CN':'en';
- document.getElementById('tagline').textContent=w.tag;document.getElementById('searchTitle').textContent=w.search;
- document.getElementById('place').placeholder=w.placeholder;document.getElementById('searchBtn').textContent=w.btn;
- document.getElementById('overviewTitle').textContent=w.overview;document.getElementById('speakBtn').textContent=w.speak;
- document.getElementById('mapTitle').textContent=w.map;document.getElementById('nearbyTitle').textContent=w.nearby;
- document.getElementById('heritageTitle').textContent=w.heritage;
- if(!currentSummary)document.getElementById('overview').textContent=w.empty;
- if(currentName)loadSummary(currentName);
-}
-async function searchPlace(){
- const q=document.getElementById('place').value.trim();if(!q)return;
- const box=document.getElementById('matches');box.textContent='…';
- try{
-  const r=await fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=8&language='+(lang==='zh'?'zh':'en')+'&format=json');
-  const data=await r.json();box.innerHTML='';
-  (data.results||[]).forEach(p=>{
-   const d=document.createElement('div');d.className='result';
-   const b=document.createElement('button');b.className='secondary';
-   b.textContent=[p.name,p.admin1,p.country].filter(Boolean).join(', ');
-   b.onclick=()=>selectPlace(p);d.appendChild(b);box.appendChild(d);
-  });
-  if(!data.results?.length)box.textContent=words[lang].err;
- }catch(e){box.textContent=words[lang].err;}
-}
-function selectPlace(p){
- currentName=p.name;currentLat=p.latitude;currentLon=p.longitude;
- document.getElementById('map').src='https://www.openstreetmap.org/export/embed.html?bbox='+(currentLon-.12)+'%2C'+(currentLat-.08)+'%2C'+(currentLon+.12)+'%2C'+(currentLat+.08)+'&layer=mapnik&marker='+currentLat+'%2C'+currentLon;
- document.getElementById('mapNote').textContent=[p.name,p.admin1,p.country].filter(Boolean).join(', ');
- const q=encodeURIComponent(currentName);
- document.getElementById('nearbyLinks').innerHTML=
-  '<p><a target="_blank" rel="noopener" href="https://www.openstreetmap.org/#map=14/'+currentLat+'/'+currentLon+'">OpenStreetMap · 地图与周边</a></p>'+
-  '<p><a target="_blank" rel="noopener" href="https://www.google.com/maps/search/hotels/@'+currentLat+','+currentLon+',14z">住宿搜索</a></p>'+
-  '<p><a target="_blank" rel="noopener" href="https://www.google.com/maps/search/restaurants/@'+currentLat+','+currentLon+',14z">餐饮搜索</a></p>'+
-  '<p><a target="_blank" rel="noopener" href="https://www.google.com/maps/search/transport/@'+currentLat+','+currentLon+',14z">交通搜索</a></p>';
- document.getElementById('heritageLinks').innerHTML=
-  '<p><a target="_blank" rel="noopener" href="https://whc.unesco.org/en/list/?search='+q+'">UNESCO 世界遗产查询</a></p>'+
-  '<p><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query='+q+'+travel">YouTube 旅游视频</a></p>'+
-  '<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/'+q+'">Wikipedia</a></p>';
- loadSummary(currentName);
-}
-async function loadSummary(name){
- const langCode=lang==='zh'?'zh':'en';
- try{
-  const r=await fetch('https://'+langCode+'.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(name));
-  const d=await r.json();currentSummary=d.extract||'';
-  document.getElementById('overview').textContent=currentSummary||words[lang].err;
- }catch(e){document.getElementById('overview').textContent=words[lang].err;}
-}
-function speak(){
- const t=document.getElementById('overview').textContent;
- if(!t||!window.speechSynthesis)return;
- const u=new SpeechSynthesisUtterance(t);u.lang=lang==='zh'?'zh-CN':'en-US';speechSynthesis.cancel();speechSynthesis.speak(u);
-}
+function setText(id,v){const el=document.getElementById(id);if(el)el.textContent=v}
+function toggleLang(){lang=lang==='zh'?'en':'zh';const t=T[lang];document.documentElement.lang=lang==='zh'?'zh-CN':'en';setText('heroEyebrow',t.eyebrow);document.getElementById('heroTitle').innerHTML=t.title;setText('heroText',t.hero);document.getElementById('place').placeholder=t.placeholder;setText('searchBtn',t.search);setText('heroNote',t.note);setText('catTitle',t.cat);setText('catSub',t.catSub);t.c.forEach((v,i)=>setText('c'+(i+1),v));setText('inspireTitle',t.inspire);setText('inspireSub',t.inspireSub);setText('speakBtn',t.speak);setText('saveBtn',currentPlace&&saved.some(x=>x.name===currentPlace.name)?t.saved:t.save);setText('knowledgeTitle',t.knowledge);setText('knowledgeText',t.knowledgeText);['navHome','navSearch','navSaved','navAbout'].forEach((id,i)=>setText(id,t.nav[i]));if(currentPlace)loadSummary(currentPlace.name);else setText('detailSummary',t.empty)}
+function quickSearch(q){document.getElementById('place').value=q;searchPlace()}
+async function searchPlace(){const q=document.getElementById('place').value.trim();if(!q)return;const box=document.getElementById('matches');box.style.display='block';box.innerHTML='<div class="result-card">Searching the world…</div>';try{const r=await fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=8&language='+(lang==='zh'?'zh':'en')+'&format=json');const d=await r.json();box.innerHTML='';(d.results||[]).forEach(p=>{const row=document.createElement('div');row.className='result-card';const label=document.createElement('div');label.innerHTML='<b></b><br><small></small>';label.querySelector('b').textContent=p.name;label.querySelector('small').textContent=[p.admin1,p.country].filter(Boolean).join(' · ');const btn=document.createElement('button');btn.textContent=lang==='zh'?'查看档案':'VIEW';btn.onclick=()=>selectPlace(p);row.append(label,btn);box.append(row)});if(!d.results?.length)box.innerHTML='<div class="result-card">No matching places found.</div>'}catch(e){box.innerHTML='<div class="result-card">Network error. Please try again.</div>'}}
+function selectPlace(p){currentPlace=p;document.getElementById('detail').style.display='block';setText('detailName',[p.name,p.admin1,p.country].filter(Boolean).join(', '));setText('detailSummary',T[lang].empty);document.getElementById('map').src='https://www.openstreetmap.org/export/embed.html?bbox='+(p.longitude-.15)+'%2C'+(p.latitude-.1)+'%2C'+(p.longitude+.15)+'%2C'+(p.latitude+.1)+'&layer=mapnik&marker='+p.latitude+'%2C'+p.longitude;const q=encodeURIComponent(p.name);const urls=['https://www.openstreetmap.org/#map=13/'+p.latitude+'/'+p.longitude,'https://www.google.com/maps/search/hotels/@'+p.latitude+','+p.longitude+',14z','https://www.google.com/maps/search/restaurants/@'+p.latitude+','+p.longitude+',14z','https://whc.unesco.org/en/list/?search='+q,'https://www.youtube.com/results?search_query='+q+'+travel','https://www.google.com/maps/search/transport/@'+p.latitude+','+p.longitude+',14z'];document.getElementById('exploreLinks').innerHTML='';urls.forEach((u,i)=>{const a=document.createElement('a');a.className='link-tile';a.href=u;a.target='_blank';a.rel='noopener';a.textContent=T[lang].links[i]+' ↗';document.getElementById('exploreLinks').append(a)});setText('saveBtn',saved.some(x=>x.name===p.name)?T[lang].saved:T[lang].save);loadSummary(p.name);document.getElementById('detail').scrollIntoView({behavior:'smooth',block:'start'})}
+async function loadSummary(name){try{const r=await fetch('https://'+(lang==='zh'?'zh':'en')+'.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(name));const d=await r.json();currentSummary=d.extract||T[lang].error;setText('detailSummary',currentSummary)}catch(e){currentSummary=T[lang].error;setText('detailSummary',currentSummary)}}
+function speak(){if(!currentSummary||!window.speechSynthesis)return;const u=new SpeechSynthesisUtterance(currentSummary);u.lang=lang==='zh'?'zh-CN':'en-US';speechSynthesis.cancel();speechSynthesis.speak(u)}
+function savePlace(){if(!currentPlace)return;const i=saved.findIndex(x=>x.name===currentPlace.name);if(i>=0)saved.splice(i,1);else saved.push({name:currentPlace.name,country:currentPlace.country,latitude:currentPlace.latitude,longitude:currentPlace.longitude});localStorage.setItem('we_saved',JSON.stringify(saved));setText('saveBtn',saved.some(x=>x.name===currentPlace.name)?T[lang].saved:T[lang].save)}
+function showSaved(){const box=document.getElementById('matches');box.style.display='block';box.innerHTML='';if(!saved.length){box.innerHTML='<div class="result-card">'+T[lang].noSaved+'</div>';return}saved.forEach(p=>{const row=document.createElement('div');row.className='result-card';const n=document.createElement('b');n.textContent=p.name;const b=document.createElement('button');b.textContent=lang==='zh'?'打开':'OPEN';b.onclick=()=>selectPlace(p);row.append(n,b);box.append(row)});box.scrollIntoView({behavior:'smooth'})}
+function showAbout(){alert(T[lang].about)}
+function focusSearch(){document.getElementById('place').focus();window.scrollTo({top:0,behavior:'smooth'})}
+function scrollTopPage(){window.scrollTo({top:0,behavior:'smooth'})}
 document.getElementById('place').addEventListener('keydown',e=>{if(e.key==='Enter')searchPlace()});
-setLang('zh');
 </script>
 </body>
 </html>
